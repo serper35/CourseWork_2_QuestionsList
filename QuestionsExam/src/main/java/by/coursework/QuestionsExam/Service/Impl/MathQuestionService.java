@@ -5,33 +5,33 @@ import by.coursework.QuestionsExam.Exception.QuestionNotFoundException;
 import by.coursework.QuestionsExam.Question;
 import by.coursework.QuestionsExam.Repository.QuestionRepository;
 import by.coursework.QuestionsExam.Service.QuestionService;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-@Primary
-public class JavaQuestionService implements QuestionService {
-
+@Qualifier("Math")
+public class MathQuestionService implements QuestionService {
     @Autowired
+    @Qualifier("Math")
     private QuestionRepository questionRepository;
 
-//    public JavaQuestionService(QuestionRepository questionRepository) {
+//    public MathQuestionService(@Qualifier("Math")QuestionRepository questionRepository) {
 //        this.questionRepository = questionRepository;
 //    }
 
     //    List<Question> questionsList = new ArrayList<>(List.of(
-//            new Question("A","B"),
-//            new Question("C","D"),
-//            new Question("E","F"),
-//            new Question("Why","Because"),
-//            new Question("What","Sun"),
-//            new Question("Where","City"),
-//            new Question("Wnen","Winter"),
-//            new Question("How","Fast")
+//            new Question("1*1","1"),
+//            new Question("2*2","4"),
+//            new Question("3*3","9"),
+//            new Question("4*4","16"),
+//            new Question("5*5","25"),
+//            new Question("6*6","36"),
+//            new Question("7*7","49"),
+//            new Question("10*10","100")
 //    ));
     @Override
     public Question add(String question, String answer) {
@@ -75,7 +75,6 @@ public class JavaQuestionService implements QuestionService {
         Random random = new Random();
         int i = random.nextInt(0, questionRepository.getAll().size());
         List<Question> copy = new ArrayList<>(questionRepository.getAll().size());
-        copy.addAll(questionRepository.getAll());
         return copy.get(i);
     }
 }
