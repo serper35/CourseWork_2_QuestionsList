@@ -75,6 +75,7 @@ public class MathQuestionService implements QuestionService {
         Random random = new Random();
         int i = random.nextInt(0, questionRepository.getAll().size());
         List<Question> copy = new ArrayList<>(questionRepository.getAll().size());
+        copy.addAll(questionRepository.getAll());
         return copy.get(i);
     }
 }

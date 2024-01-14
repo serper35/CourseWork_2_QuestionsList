@@ -19,20 +19,6 @@ public class JavaQuestionService implements QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
 
-//    public JavaQuestionService(QuestionRepository questionRepository) {
-//        this.questionRepository = questionRepository;
-//    }
-
-    //    List<Question> questionsList = new ArrayList<>(List.of(
-//            new Question("A","B"),
-//            new Question("C","D"),
-//            new Question("E","F"),
-//            new Question("Why","Because"),
-//            new Question("What","Sun"),
-//            new Question("Where","City"),
-//            new Question("Wnen","Winter"),
-//            new Question("How","Fast")
-//    ));
     @Override
     public Question add(String question, String answer) {
         Question question1 = new Question(question, answer);

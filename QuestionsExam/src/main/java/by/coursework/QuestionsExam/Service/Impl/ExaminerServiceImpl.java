@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
@@ -24,45 +21,32 @@ public class ExaminerServiceImpl implements ExaminerService {
 
 
     public ExaminerServiceImpl(QuestionService questionService,
-                               @Qualifier("Math")QuestionService questionServiceMath) {
+                               @Qualifier("Math") QuestionService questionServiceMath) {
         this.questionService = questionService;
         this.questionServiceMath = questionServiceMath;
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        List<Question> randomQ = new ArrayList<>();
+        Collection<Question> randomQ = new HashSet<>();
 
         if (amount > questionService.getAll().size() + questionServiceMath.getAll().size()) {
             throw new QuestionLimitException("В базе недостаточно вопросов для выполнения команды!");
         }
 
-        int step = 0;
-        while (step < amount) {
+        while (randomQ.size() < amount) {
             Random type = new Random();
             int i = type.nextInt(2);
 
             if (i == 0) {
                 Question random = questionService.getRandomQuestion();
-                if (!randomQ.contains(random)) {
-                    randomQ.add(random);
-                    step++;
-                } else {
-                    Question random1 = questionServiceMath.getRandomQuestion();
-                    if (!randomQ.contains(random1)) {
-                        randomQ.add(random1);
-                        step++;
-                    }
-                }
-
+                randomQ.add(random);
+            } else {
+                Question random1 = questionServiceMath.getRandomQuestion();
+                randomQ.add(random1);
             }
-//            Question random = questionService.getRandomQuestion();
-//            if (!randomQ.contains(random)) {
-//                randomQ.add(random);
-//                step++;
-//            }
         }
-
         return randomQ;
+
     }
 }
