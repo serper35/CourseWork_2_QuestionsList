@@ -5,20 +5,34 @@ import by.coursework.QuestionsExam.Exception.QuestionNotFoundException;
 import by.coursework.QuestionsExam.Question;
 import by.coursework.QuestionsExam.Repository.QuestionRepository;
 import by.coursework.QuestionsExam.Service.QuestionService;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-@Primary
-public class JavaQuestionService implements QuestionService {
-
+@Qualifier("Math")
+public class MathQuestionService implements QuestionService {
     @Autowired
+    @Qualifier("Math")
     private QuestionRepository questionRepository;
 
+//    public MathQuestionService(@Qualifier("Math")QuestionRepository questionRepository) {
+//        this.questionRepository = questionRepository;
+//    }
+
+    //    List<Question> questionsList = new ArrayList<>(List.of(
+//            new Question("1*1","1"),
+//            new Question("2*2","4"),
+//            new Question("3*3","9"),
+//            new Question("4*4","16"),
+//            new Question("5*5","25"),
+//            new Question("6*6","36"),
+//            new Question("7*7","49"),
+//            new Question("10*10","100")
+//    ));
     @Override
     public Question add(String question, String answer) {
         Question question1 = new Question(question, answer);
