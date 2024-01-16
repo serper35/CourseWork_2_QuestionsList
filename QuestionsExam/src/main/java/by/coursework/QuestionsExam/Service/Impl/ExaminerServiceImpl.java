@@ -13,40 +13,35 @@ import java.util.*;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    @Autowired
-    private QuestionService questionService;
-    @Autowired
-    @Qualifier("Math")
-    private QuestionService questionServiceMath;
+    private List<QuestionService> questionServices;
 
-
-    public ExaminerServiceImpl(QuestionService questionService,
-                               @Qualifier("Math") QuestionService questionServiceMath) {
-        this.questionService = questionService;
-        this.questionServiceMath = questionServiceMath;
+    public ExaminerServiceImpl(List<QuestionService> questionService) {
+        this.questionServices = questionService;
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
         Collection<Question> randomQ = new HashSet<>();
 
-        if (amount > questionService.getAll().size() + questionServiceMath.getAll().size()) {
+        if (amount > questionServices.get(0).getAll().size() + questionServices.get(1).getAll().size()) {
             throw new QuestionLimitException("В базе недостаточно вопросов для выполнения команды!");
         }
 
+
         while (randomQ.size() < amount) {
+
             Random type = new Random();
             int i = type.nextInt(2);
 
             if (i == 0) {
-                Question random = questionService.getRandomQuestion();
+                Question random = questionServices.get(0).getRandomQuestion();
                 randomQ.add(random);
             } else {
-                Question random1 = questionServiceMath.getRandomQuestion();
+                Question random1 = questionServices.get(1).getRandomQuestion();
                 randomQ.add(random1);
             }
         }
         return randomQ;
-
     }
 }
+
